@@ -9,13 +9,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-build-push:
+  build:
+    name: Starting build
     runs-on: ubuntu-latest
+    environment: secrets
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       DOCKERHUB_REPOSITORY: ${{ vars.DOCKERHUB_REPOSITORY || 'pix-backend' }}
       PUSH_ENABLED: ${{ vars.DOCKERHUB_PUSH_ENABLED || 'false' }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
