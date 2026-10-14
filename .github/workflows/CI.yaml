@@ -14,7 +14,7 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      DOCKERHUB_REPOSITORY: ${{ vars.DOCKERHUB_REPOSITORY || 'pix-backend' }}
+      DOCKERHUB_REPOSITORY: ${{ vars.DOCKERHUB_REPOSITORY || 'igooruh/pix-backend' }}
       PUSH_ENABLED: ${{ vars.DOCKERHUB_PUSH_ENABLED || 'false' }}
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
           npm ci --ignore-scripts
           npm test
       - name: Build da imagem
-        run: docker build --tag "pix-backend:${GITHUB_SHA}" .
+        run: docker build --tag "igooruh/pix-backend:${GITHUB_SHA}" .
       - name: Push no Docker Hub
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && env.PUSH_ENABLED == 'true'
         run: |
@@ -36,5 +36,5 @@ jobs:
           IMAGE="${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY}:${GITHUB_SHA}"
           trap 'docker logout >/dev/null 2>&1 || true' EXIT
           printf '%s' "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-          docker tag "pix-backend:${GITHUB_SHA}" "$IMAGE"
+          docker tag "igooruh/pix-backend:${GITHUB_SHA}" "$IMAGE"
           docker push "$IMAGE"
