@@ -13,7 +13,7 @@ npm ci
 npm start
 ```
 
-Servidor em `http://localhost:3000`. Para outra porta: `PORT=3001 npm start` em Linux/macOS. `.env.example` documenta a variável; o servidor não carrega `.env` automaticamente. Se copiar para `.env`, execute `node --env-file=.env src/server.js`.
+Servidor em `http://localhost:8080`. Para outra porta: `PORT=3001 npm start` em Linux/macOS. `.env.example` documenta a variável; o servidor não carrega `.env` automaticamente. Se copiar para `.env`, execute `node --env-file=.env src/server.js`.
 
 ```bash
 npm test
@@ -31,7 +31,7 @@ npm run test:coverage
 ### 1. Criar
 
 ```bash
-curl -i -X POST http://localhost:3000/pix \
+curl -i -X POST http://localhost:8080/pix \
   -H 'Content-Type: application/json' \
   -H 'Idempotency-Key: pedido-001' \
   -d '{"chaveDestino":"cliente@example.com","valorCentavos":1050,"descricao":"Pedido 001"}'
@@ -63,13 +63,13 @@ Exemplo de resposta (ID e data variam):
 Substitua pelo ID devolvido na criação:
 
 ```bash
-curl http://localhost:3000/pix/e824df4a-b9ab-451d-bd04-20fe5c32f027
+curl http://localhost:8080/pix/e824df4a-b9ab-451d-bd04-20fe5c32f027
 ```
 
 ### 3. Listar
 
 ```bash
-curl 'http://localhost:3000/pix?pagina=1&limite=20'
+curl 'http://localhost:8080/pix?pagina=1&limite=20'
 ```
 
 Formato: `{"data":[],"total":0,"pagina":1,"limite":20}`. `total` considera todos os registros; `data` contém somente a página solicitada. Página começa em 1 (máximo 1000000), limite de 1 a 100. Página além dos dados retorna lista vazia. Parâmetros desconhecidos ou repetidos retornam 400.
@@ -92,7 +92,7 @@ Formato: `{"erro":"Mensagem descritiva."}`.
 
 ```bash
 docker build -t pix-backend:local .
-docker run --rm -p 127.0.0.1:3000:3000 --name pix-backend pix-backend:local
+docker run --rm -p 127.0.0.1:8080:8080 --name pix-backend pix-backend:local
 ```
 
 O Dockerfile executa os testes em um estágio próprio antes da imagem final. A imagem final copia desse estágio, portanto falha nos testes impede sua construção. Roda com usuário `node`, sem incluir os testes ou credenciais na imagem final. Como o projeto é JavaScript, não há etapa de compilação: o build solicitado é o da imagem.
