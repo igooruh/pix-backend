@@ -1,0 +1,6 @@
+{
+  "name": "pix-backend", "version": "1.0.0", "private": true,
+  "type": "module", "description": "API didática de Pix simulado",
+  "engines": { "node": ">=24 <25" },
+  "scripts": { "start": "node src/server.js", "test": "node --test", "test:coverage": "node --test --experimental-test-coverage" }
+}

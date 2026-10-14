@@ -1,0 +1,7 @@
+node_modules/
+.env
+coverage/
+*.log
+.bob
+.vscode
+package-lock.json
