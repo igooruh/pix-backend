@@ -31,7 +31,6 @@ jobs:
       - name: Build da imagem
         run: docker build --tag "pix-backend:${GITHUB_SHA}" .
       - name: Push no Docker Hub
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop' && env.PUSH_ENABLED == 'true'
         run: |
           set -euo pipefail
           : "${DOCKERHUB_USERNAME:?Configure DOCKERHUB_USERNAME}"
