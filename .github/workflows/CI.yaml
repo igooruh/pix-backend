@@ -21,6 +21,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Install dependencies NPM project
+        run: |
+          npm i
       - name: Testes (obrigatórios antes do build)
         run: |
           npm ci --ignore-scripts
